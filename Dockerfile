@@ -5,8 +5,8 @@ LABEL "com.github.actions.description"="Automate mirroring of git commits to Git
 LABEL "com.github.actions.icon"="git-commit"
 LABEL "com.github.actions.color"="blue"
 
-LABEL "repository"="https://github.com/asac/gitlab-mirror-and-ci-action"
-LABEL "homepage"="https://github.com/asac/gitlab-mirror-and-ci-action"
+LABEL "repository"="https://github.com/pantacor/gitlab-mirror-and-ci-action"
+LABEL "homepage"="https://github.com/pantacor/gitlab-mirror-and-ci-action"
 LABEL "maintainer"="Sebass van Boxel <hello@svboxel.com>"
 LABEL "maintainer"="Alexander Sack <asac@pantacor.com>"
 
