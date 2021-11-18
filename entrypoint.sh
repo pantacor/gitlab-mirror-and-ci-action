@@ -1,6 +1,7 @@
 #!/bin/sh
 
 set -u
+set -e
 ##################################################################
 urlencode() (
     i=1
@@ -31,7 +32,14 @@ sh -c "git config --global core.askPass /cred-helper.sh"
 sh -c "git config --global credential.helper cache"
 sh -c "git remote add mirror $*"
 sh -c "echo pushing to $branch branch at $(git remote get-url --push mirror)"
-sh -c "git push mirror -f $branch"
+git_status=$(sh -c "git push mirror -f $branch" >& /dev/stdout)
+
+case "$git_status" in
+   *"Everything up-to-date"*)
+      echo "Triggering pipeline manually..."
+      curl -v -X POST -F "ref=$branch" -F "token=$GITLAB_TRIGGER_TOKEN" "https://${GITLAB_HOSTNAME}/api/v4/projects/${GITLAB_PROJECT_ID}/trigger/pipeline"
+      ;;
+esac
 
 sleep $POLL_TIMEOUT
 
