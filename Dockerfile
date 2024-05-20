@@ -12,5 +12,4 @@ LABEL "maintainer"="Alexander Sack <asac@pantacor.com>"
 
 
 COPY entrypoint.sh /entrypoint.sh
-COPY cred-helper.sh /cred-helper.sh
 ENTRYPOINT ["/entrypoint.sh"]

@@ -2,6 +2,7 @@
 
 set -u
 set -x
+set -e
 
 ##################################################################
 urlencode() (
@@ -30,10 +31,8 @@ git checkout "${GITHUB_REF:11}"
 branch="$(git symbolic-ref --short HEAD)"
 branch_uri="$(urlencode ${branch})"
 
-sh -c "git config --global credential.username $GITLAB_USERNAME"
-sh -c "git config --global core.askPass /cred-helper.sh"
-sh -c "git config --global credential.helper cache"
-sh -c "git remote add mirror $*"
+url=$(echo "$*" | sed "s|https://|https://$GITLAB_USERNAME:$GITLAB_PASSWORD@|")
+sh -c "git remote add mirror $url"
 sh -c "echo pushing to $branch branch at $(git remote get-url --push mirror)"
 git_status=$(sh -c "git push mirror -f $branch" >& /dev/stdout)
 
